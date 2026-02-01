@@ -11,7 +11,9 @@ Wrapping is handled automatically (e.g. shifting past å loops back to a).
 
 Requirements
 ------------
-Python 3
+No external dependencies
+Python >= 3.8
+
 
 Usage
 -----
