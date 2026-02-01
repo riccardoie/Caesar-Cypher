@@ -14,7 +14,6 @@ Requirements
 No external dependencies
 Python >= 3.8
 
-
 Usage
 -----
 python3 caesar.py `key` `filename` [-d]
@@ -27,3 +26,9 @@ python3 caesar.py `key` `filename` [-d]
 
 - **-d, --decrypt** (optional)  
   Decrypts the file instead of encrypting it.
+
+Testing
+-------
+In order to test caeser.py unit_tests.py can be used.
+To run unit_tests.py run:<br>
+python3 unit_tests.py
