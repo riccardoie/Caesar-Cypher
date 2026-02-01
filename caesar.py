@@ -37,6 +37,7 @@ def main(key, filename, flag):
     for letter in text:
         if (letter in alphabet):
             index = get_index(key, letter.lower(), flag)
+            # Maintain case.
             encrypted_message += alphabet[index] if not letter.isupper() else alphabet[index].upper()
         else:
             encrypted_message += letter # We keep special characters and spaces as are
