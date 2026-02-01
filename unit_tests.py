@@ -27,6 +27,22 @@ class TestCaesarCipher(unittest.TestCase):
         cipher = CaesarCipher(5)
         self.assertEqual(cipher.encrypt("hello, world!"), "mjqqt, øtwqi!")
 
+    def test_negative_encrypt(self):
+        cipher = CaesarCipher(-5)
+        self.assertEqual(cipher.encrypt("hello, world!"), "cåggj, rjmgø!")
+        self.assertEqual(cipher.decrypt("cåggj, rjmgø!"), "hello, world!")
+    
+    def test_key_zero(self):
+        cipher = CaesarCipher(0)
+        self.assertEqual(cipher.encrypt("hello, world!"), "hello, world!")
+        self.assertEqual(cipher.decrypt("hello, world!"), "hello, world!")
+    
+    def test_empty_text(self):
+        cipher = CaesarCipher(4)
+        self.assertEqual(cipher.encrypt(""), "")
+        self.assertEqual(cipher.decrypt(""), "")
+        
+        
     def test_encrypt_decrypt_roundtrip(self):
         cipher = CaesarCipher(7)
         with open("plaintext.txt", "r") as file:

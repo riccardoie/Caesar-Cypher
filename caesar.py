@@ -2,6 +2,13 @@ import argparse
 import string
 
 class CaesarCipher:
+    '''
+    Simple Caesar cipher class that lets you encrypt or decrypt text strings
+
+    Attributes:
+        key(int): How much letters are shifted.
+        alphabet_type(int): Tells the class which alphabet to use, defaults to norwegian
+    '''
 
     def __init__(self, key, alphabet_type = 0):
         self.key = key
@@ -11,11 +18,14 @@ class CaesarCipher:
             self.alphabet = list(string.ascii_lowercase)
             self.alphabet.extend("æøå")     
             self.alphabet_size = len(self.alphabet)
-    
-    # Runs the cipher algorithm.
-    # letter:   letter shifted or to be shifted
-    # key:      how much letters are shifted
-    def __caesar_cipher__(self, letter, key):
+       
+    def _caesar_cipher(self, letter, key):
+        '''
+        Runs the cipher algorithm
+
+        :param letter: Letter shifted or to be shifted.
+        :param key: How much letters are shifted.
+        '''
         if (letter.lower() in self.alphabet):
             index = (self.alphabet.index(letter.lower()) + key) % self.alphabet_size
   
@@ -23,34 +33,44 @@ class CaesarCipher:
             return self.alphabet[index] if not letter.isupper() else self.alphabet[index].upper()
         else:
             return letter # We keep special characters and spaces as are
-    
-    # Encrypts text string by using __caesar_cipher__
-    # text:     string buffer
+
     def encrypt(self, text):
-        encrypted_message = "".join(map (lambda letter: self.__caesar_cipher__ (letter, self.key), text))
+        '''
+        Encrypts text string by using _caesar_cipher.
 
+        :param text: String buffer.
+        '''
+        encrypted_message = "".join(map (lambda letter: self._caesar_cipher (letter, self.key), text))
         return encrypted_message
-    
-    # Decrypts text string by using __caesar_cipher__
-    # text:     string buffer
-    def decrypt(self, text):
-        decrypted_message = "".join(map (lambda letter: self.__caesar_cipher__ (letter, -self.key), text))
 
+    def decrypt(self, text):
+        '''
+        Decrypts text string by using _caesar_cipher.
+
+        :param text: String buffer.
+        '''
+        decrypted_message = "".join(map (lambda letter: self._caesar_cipher (letter, -self.key), text))
         return decrypted_message
 
 
-# Opens file and returns it as a string buffer.
-# path: path to file to open
 def open_file(path):
+    '''
+    Opens file and returns it as a string buffer.
+    
+    :param path: Path to file to open.
+    '''
     with open(path, "r") as file:
         file = file.read()
     return file
 
-# Main function to run the algorithm
-# key:      how much letters are shifted
-# filename: name of file, or path to file to encrypt/decrypt
-# flag:     boolean which tells if the operation is encryption or decryption, true = encryption
 def main(key, filename, flag):
+    '''
+    Main function to run the algorithm.
+
+    :param key(int): How much letters are shifted.
+    :param filename(str): Name of file, or path to file to encrypt/decrypt.
+    :param flag(bool): Tells if the operation is encryption or decryption, true = encryption.
+    '''
     text = open_file(filename)
     caesar = CaesarCipher(key)
 
