@@ -18,7 +18,9 @@ class CaesarCipher:
             self.alphabet = list(string.ascii_lowercase)
             self.alphabet.extend("æøå")     
             self.alphabet_size = len(self.alphabet)
-       
+
+            self.index = {char: i for i, char in enumerate(self.alphabet)}
+            
     def _caesar_cipher(self, letter, key):
         '''
         Runs the cipher algorithm
@@ -26,13 +28,15 @@ class CaesarCipher:
         :param letter: Letter shifted or to be shifted.
         :param key: How much letters are shifted.
         '''
-        if (letter.lower() in self.alphabet):
-            index = (self.alphabet.index(letter.lower()) + key) % self.alphabet_size
-  
-            # Maintain case.
-            return self.alphabet[index] if not letter.isupper() else self.alphabet[index].upper()
-        else:
-            return letter # We keep special characters and spaces as are
+        lower = letter.lower()
+
+        if lower not in self.index:
+            return letter  # keep spaces, punctuation, etc.
+
+        i = self.index[lower]
+        shifted = self.alphabet[(i + key) % self.alphabet_size]
+
+        return shifted.upper() if letter.isupper() else shifted
 
     def encrypt(self, text):
         '''
